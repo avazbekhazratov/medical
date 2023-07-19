@@ -1,0 +1,34 @@
+{%extends 'base.html' %}
+
+{% block content %}
+	        <div class="content">
+	            <div class="container-fluid">
+	                <div class="row">
+	                    <div class="col-md-12">
+	                        <div class="card">
+	                            <div class="card-content">
+	                                <div class="toolbar">
+	                                    <!--Here you can write extra buttons/actions for the toolbar-->
+	                                </div>
+	                                <table  class="table">
+	                                    <thead>
+	                                        <th data-field="id" class="text-center">№</th>
+	                                    	<th data-field="actions" class="td-actions text-center" data-events="operateEvents" data-formatter="operateFormatter">Odam soni</th>
+	                                    </thead>
+	                                    <tbody>
+											{% for i in all %}
+	                                        	<tr>
+													<td>{{forloop.counter}}</td>
+													{%if i.odam_soni%}
+<!--													<td></td>-->
+												</tr>
+	                                    	{%endfor%}
+										</tbody>
+	                                </table>
+	                            </div>
+	                        </div><!--  end card  -->
+	                    </div> <!-- end col-md-12 -->
+	                </div> <!-- end row -->
+	            </div>
+	        </div>
+{% endblock %}

@@ -1,0 +1,138 @@
+doktor_list.html{%extends 'base.html' %}
+
+{% block content %}
+	        <div class="content">
+	            <div class="container-fluid">
+	                <div class="row">
+	                    <div class="col-md-12">
+							<h2>Bemorlar royxati</h2>
+							<div class="card">
+								<div class="card-content">
+									<div class="toolbar">
+										<h3 class="add_bemor"><a href="#chooseForm">Bemor qoshish</a></h3>
+	                                </div>
+	                                <table class="table">
+	                                    <thead>
+	                                    	<th data-field="name" data-sortable="true">№</th>
+	                                    	<th data-field="name" data-sortable="true">Ism</th>
+	                                    	<th data-field="salary" data-sortable="true">Familiya</th>
+	                                    	<th data-field="salary" data-sortable="true">Tel Nomer</th>
+	                                    	<th data-field="salary" data-sortable="true">Xona</th>
+	                                    	<th data-field="salary" data-sortable="true">Doktor</th>
+	                                    	<th data-field="salary" data-sortable="true">Xamshira</th>
+	                                    	<th data-field="salary" data-sortable="true">Status </th>
+	                                    </thead>
+	                                    <tbody>
+											{% for i in all %}
+	                                        	<tr>
+													<td>{{forloop.counter}}</td>
+													<td>{{i.ism}}</td>
+													<td>{{i.familiya}}</td>
+													<td>{{i.phone}}</td>
+													<td>{{i.Xona.id}}</td>
+													<td>{{i.Doktor.ism}}</td>
+													<td>{{i.Xamshira.ism}}</td>
+													{% if i.status %}
+													<td><a href="{% url 'get_klient' pk=i.id %}">Davolanvoti</a></td>
+													{%else%}
+													<td>Davolanboldi</td>
+													{% endif %}
+<!--													<td></td>-->
+												</tr>
+	                                    	{%endfor%}
+										</tbody>
+	                                </table>
+	                            </div>
+	                        </div><!--  end card  -->
+	                    </div> <!-- end col-md-12 -->
+	                </div> <!-- end row -->
+	            </div>
+	        </div>
+
+	<div class="formmodal">
+
+		<div class="col-md-6">
+	                        <div class="card">
+	                            <form id="loginFormValidation" method="POST" novalidate="novalidate">
+									{% csrf_token %}
+	                                <div class="card-header text-center">
+										<h4 class="card-title">
+											Bemor qoshish
+										</h4>
+										{% if error %}
+											<h5 class="text-danger">{{error}}</h5>
+										{%endif%}
+									</div>
+	                                <div class="card-content">
+	                                    <div class="form-group">
+	                                        <label class="control-label">Ism </label>
+	                                        <input class="form-control" name="ism" type="text" required>
+	                                    </div>
+	                                    <div class="form-group">
+	                                        <label class="control-label">Familiya </label>
+	                                        <input class="form-control" name="familiya" type="text" required="true">
+	                                    </div>
+	                                    <div class="form-group">
+	                                        <label class="control-label">Tel Nomer </label>
+	                                        <input required="required" class="form-control" name="phone" id="registerPassword" type="number" placeholder="998 99 123 45 67">
+	                                    </div>
+										<div class="col-md-6" >
+													<h4 class="card-title">Xona</h4>
+													<div class="row">
+														<div class="col-sm-6">
+															<select name="xona" class="selectpicker" data-style="btn btn-info btn-block" title="Tanlash" data-size="7">
+																{% for i in xona %}
+																	{% if i.odam_soni < 2 %}
+																		<option value="{{i.id}}">{{i.id}} - Xona || Narxi {{i.narxi}} $</option>
+																	{% endif %}
+																{%endfor%}
+															</select>
+														</div>
+													</div>
+												</div>
+										<div class="col-md-6">
+													<h4 class="card-title">Xamshira</h4>
+													<div class="row">
+														<div class="col-sm-6">
+															<select name="xamshira" class="selectpicker" data-style="btn btn-info btn-block" title="Tanlash">
+																{% for i in xamshira %}
+																	{%if not i.status%}
+																		<option value="{{i.id}}">{{i.ism}}</option>
+																{% if xamshira is None %}
+																	<h3>Xamshira qomadi</h3>
+																{% endif %}
+																	{% endif %}
+																{%endfor%}
+															</select>
+														</div>
+													</div>
+												</div>
+										<div class="col-md-6">
+											<h4 class="card-title">Doktor</h4>
+											<div class="row">
+												<div class="col-sm-6">
+													<select name="doktor" class="selectpicker" data-style="btn btn-info btn-block" title="Tanlash" data-size="7">
+														{% for i in doktor %}
+														{%if not i.status%}
+														<option value="{{i.id}}">{{i.ism}}</option>
+														{%endif%}
+														{%endfor%}
+
+													</select>
+												</div>
+											</div>
+										</div>
+
+
+									<div class="card-footer text-center" id="chooseForm">
+										<button type="submit" class="btn btn-info btn-fill btn-wd">Qoshish</button>
+									</div>
+									</div>
+	                            </form>
+	                        </div>
+	                    </div>
+
+
+
+
+{% endblock %}
